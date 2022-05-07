@@ -9,3 +9,8 @@ Route::controller(\App\Http\Controllers\AuthController::class)
         Route::get('login', 'showLogin')->name('view.login');
     });
 
+Route::controller(\App\Http\Controllers\CheckoutController::class)
+    ->group(function() {
+        Route::get('checkout', 'showCheckout')->name('view.checkout');
+        Route::get('checkout/success', 'showCheckoutSuccess')->name('view.checkout-success');
+    });
