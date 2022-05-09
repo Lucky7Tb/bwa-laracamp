@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    @include('layouts/Navbar')
+    @include('layouts.user.navbar')
 
     @yield('content')
 

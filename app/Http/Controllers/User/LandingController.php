@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\Camp;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Camp;
 
 class LandingController extends Controller
 {
-    public function index()
+    public function showLanding()
     {
         $camps = Camp::select('id', 'title', 'slug', 'price')
             ->with([
@@ -15,6 +16,6 @@ class LandingController extends Controller
             ])
             ->get();
 
-        return view('landing', compact('camps'));
+        return view('user.landing', compact('camps'));
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts/AppLayout')
+@extends('layouts.user.app')
 
 @section('content')
 <section class="dashboard my-5">
@@ -18,7 +18,7 @@
                 <tbody>
                     <tr class="align-middle">
                         <td width="18%">
-                            <img src="{{ 'images/item_bootcamp.png' }}" height="120" alt="">
+                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
                         </td>
                         <td>
                             <p class="mb-2">
@@ -42,7 +42,7 @@
                     </tr>
                     <tr class="align-middle">
                         <td width="18%">
-                            <img src="{{ 'images/item_bootcamp.png' }}" height="120" alt="">
+                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="">
                         </td>
                         <td>
                             <p class="mb-2">
@@ -66,7 +66,7 @@
                     </tr>
                     <tr class="align-middle">
                         <td width="18%">
-                            <img src="{{ 'images/item_bootcamp.png' }}" height="120" alt=" ">
+                            <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt=" ">
                         </td>
                         <td>
                             <p class=" mb-2 ">

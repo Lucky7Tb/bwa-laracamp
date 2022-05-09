@@ -1,4 +1,4 @@
-@extends('layouts/AppLayout')
+@extends('layouts.user.app')
 
 @section('content')
 <section class="banner">
