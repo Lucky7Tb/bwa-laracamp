@@ -192,7 +192,7 @@
                 <div class="row">
                     @foreach($camps as $camp)
                         <div class="col-lg-6 col-12">
-                            <div class="table-pricing paket-gila">
+                            <div class="table-pricing {{ $camp->slug === 'gila-belajar' ? 'paket-gila' : 'paket-biasa' }}">
                                 <p class="story text-center">
                                     {{ $camp->title }}
                                 </p>
@@ -215,7 +215,7 @@
                                     </div>
                                  @endforeach
                                 <p>
-                                    <a href="{{ $camp->slug }}" class="btn btn-master btn-primary w-100 mt-3">
+                                    <a href="{{ route('view.checkout', $camp->slug) }}" class="btn btn-master btn-primary w-100 mt-3">
                                         Take This Plan
                                     </a>
                                 </p>

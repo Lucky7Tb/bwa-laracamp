@@ -9,11 +9,14 @@ Route::get('/dashboard', [\App\Http\Controllers\User\DashboardController::class,
 Route::controller(\App\Http\Controllers\User\AuthController::class)
     ->group(function() {
         Route::get('login', 'showLogin')->name('view.login');
+        Route::get('auth/google/redirect', 'loginWithGoogle')->name('action.login-with-google');
+        Route::get('auth/google/callback', 'loginGoogleCallback')->name('action.login-callback');
+        Route::post('logout', 'logout')->name('action.logout');
     });
 
 Route::controller(\App\Http\Controllers\User\CheckoutController::class)
     ->group(function() {
-        Route::get('checkout', 'showCheckout')->name('view.checkout');
+        Route::get('checkout/{camp:slug}', 'showCheckout')->name('view.checkout');
         Route::get('checkout/success', 'showCheckoutSuccess')->name('view.checkout-success');
     });
 
