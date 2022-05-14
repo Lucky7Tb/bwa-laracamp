@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\User\LandingController::class, 'showLanding']);
 
-Route::get('/dashboard', [\App\Http\Controllers\User\DashboardController::class, 'showDashboard']);
+Route::get('/dashboard', [\App\Http\Controllers\User\DashboardController::class, 'showDashboard'])
+    ->name('view.dashboard');
 
 Route::controller(\App\Http\Controllers\User\AuthController::class)
     ->group(function() {
@@ -17,7 +18,7 @@ Route::controller(\App\Http\Controllers\User\AuthController::class)
 Route::controller(\App\Http\Controllers\User\CheckoutController::class)
     ->group(function() {
         Route::get('checkout/{camp:slug}', 'showCheckout')->name('view.checkout');
-        Route::get('checkout/success', 'showCheckoutSuccess')->name('view.checkout-success');
+        Route::post('checkout/{camp}', 'doCheckout')->name('action.checkout');
     });
 
 Route::prefix('admin')

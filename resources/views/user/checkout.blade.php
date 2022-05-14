@@ -20,7 +20,7 @@
                         <div class="item-bootcamp">
                             <img src="{{ asset('images/item_bootcamp.png') }}" alt="" class="cover">
                             <h1 class="package">
-                                GILA BELAJAR
+                                {{ $camp->title }}
                             </h1>
                             <p class="description">
                                 Bootcamp ini akan mengajak Anda untuk belajar penuh mulai dari pengenalan dasar sampai membangun sebuah projek asli
@@ -29,32 +29,51 @@
                     </div>
                     <div class="col-lg-1 col-12"></div>
                     <div class="col-lg-6 col-12">
-                        <form action="#" class="basic-form">
+                        <form action="{{ route('action.checkout', $camp->id) }}" class="basic-form" method="POST">
+                            @csrf
                             <div class="mb-4">
-                                <label for="exampleInputEmail1" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jhon doe">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" aria-describedby="fullNameHelp" placeholder="e.g Jhon doe" name="name" value="{{ old('name', auth()->user()->name) }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e.g jhondoe@mail.com">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="e.g jhondoe@mail.com" name="email" value="{{ old('email', auth()->user()->email) }}">
+                                @error('email')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="exampleInputEmail1" class="form-label">Occupation</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e.g Programmer">
+                                <label for="occupation" class="form-label">Occupation</label>
+                                <input type="text" class="form-control" id="occupation" aria-describedby="emailHelp" placeholder="e.g Programmer" name="occupation" value="{{ old('occupation') }}">
+                               @error('occupation')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-4">
-                                <label for="exampleInputEmail1" class="form-label">Card Number</label>
-                                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e.g 171xxxxxxx">
+                                <label for="card_number" class="form-label">Card Number</label>
+                                <input type="number" class="form-control" id="card_number" aria-describedby="emailHelp" placeholder="e.g 171xxxxxxx" name="card_number" value="{{ old('card_number') }}">
+                                @error('card_number')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-5">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
-                                        <label for="exampleInputEmail1" class="form-label">Expired</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="01/2002">
+                                        <label for="expired" class="form-label">Expired</label>
+                                        <input type="text" class="form-control" id="expired" aria-describedby="emailHelp" placeholder="2022-01" name="expired" value="{{ old('expired') }}">
+                                        @error('expired')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="col-lg-6 col-12">
-                                        <label for="exampleInputEmail1" class="form-label">CVC</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="101">
+                                        <label for="cvc" class="form-label">CVC</label>
+                                        <input type="text" class="form-control" id="cvc" aria-describedby="cvc" placeholder="101" name="cvc" value="{{ old('cvc') }}">
+                                        @error('cvc')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
