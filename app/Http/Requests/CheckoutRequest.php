@@ -24,6 +24,8 @@ class CheckoutRequest extends FormRequest
      */
     public function rules()
     {
+        $expiredDateNow = date('Y-m', time());
+
         return [
             'name' => ['required', 'string'],
             'email' => [
@@ -33,9 +35,9 @@ class CheckoutRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore($this->user()->id),
             ],
             'occupation' => ['required', 'string'],
-            'card_number' => ['required', 'integer'],
-            'expired' => ['required', 'string', 'date_format:Y-m'],
-            'cvc' => ['required', 'digits:3']
+            'card_number' => ['required', 'numeric', 'digits_between:8,16'],
+            'expired' => ['required', 'string', 'date_format:Y-m', 'after_or_equal:'.$expiredDateNow],
+            'cvc' => ['required', 'numeric', 'digits:3']
         ];
     }
 }

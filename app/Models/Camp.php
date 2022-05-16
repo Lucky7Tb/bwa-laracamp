@@ -13,6 +13,18 @@ class Camp extends Model
 
     protected $guarded = ['id'];
 
+    public function getIsRegisteredAttribute()
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+
+        return Checkout::where([
+            'camp_id' => $this->id,
+            'user_id' => auth()->user()->id
+        ])->exists();
+    }
+
     public function campBenefits()
     {
         return $this->hasMany(CampBenefit::class);

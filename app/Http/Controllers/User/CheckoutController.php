@@ -5,15 +5,16 @@ namespace App\Http\Controllers\User;
 use App\Http\Requests\CheckoutRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\Checkout;
 use App\Models\Camp;
-use Carbon\Carbon;
 
 class CheckoutController extends Controller
 {
     public function showCheckout(Camp $camp)
     {
+        if ($camp->isRegistered) {
+            return redirect(route('view.dashboard'))->with('error.message', 'You already registered');
+        }
         return view('user.checkout', compact('camp'));
     }
 

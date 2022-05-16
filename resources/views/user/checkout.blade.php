@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
                                         <label for="expired" class="form-label">Expired</label>
-                                        <input type="text" class="form-control" id="expired" aria-describedby="emailHelp" placeholder="2022-01" name="expired" value="{{ old('expired') }}">
+                                        <input type="month" class="form-control" id="expired" aria-describedby="expired" placeholder="2022-01" name="expired" value="{{ old('expired') }}">
                                         @error('expired')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror

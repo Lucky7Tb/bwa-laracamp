@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ asset('images/logo.png') }}" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -33,8 +33,8 @@
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item" onclick="event.preventDefault();document.getElementById('formLogout').submit()">Keluar</a>
-                                <form id="formLogout" action="{{ route('action.logout') }}" method="POST">
-                                    @csrf
+                                <form id="formLogout" action="{{ route('logout') }}" method="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                             </li>
                         </ul>
