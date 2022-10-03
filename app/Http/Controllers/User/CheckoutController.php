@@ -20,11 +20,6 @@ class CheckoutController extends Controller
         return view('user.checkout', compact('camp'));
     }
 
-    public function showInvoice(Checkout $checkout)
-    {
-        return $checkout;
-    }
-
     public function doCheckout(CheckoutRequest $request, Camp $camp)
     {
         $checkoutData = $request->validated();

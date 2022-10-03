@@ -25,7 +25,6 @@ Route::middleware(['auth'])
             ->prefix('checkout')
             ->group(function() {
                 Route::get('/{camp:slug}', 'showCheckout')->name('view.checkout');
-                Route::get('/{checkout}/invoice', 'showInvoice')->name('view.checkout.invoice');
                 Route::post('/{camp}', 'doCheckout')->name('action.checkout');
             });
 
