@@ -22,9 +22,11 @@ Route::middleware(['auth'])
 
         Route::controller(\App\Http\Controllers\User\CheckoutController::class)
             ->middleware(['is.user'])
+            ->prefix('checkout')
             ->group(function() {
-                Route::get('checkout/{camp:slug}', 'showCheckout')->name('view.checkout');
-                Route::post('checkout/{camp}', 'doCheckout')->name('action.checkout');
+                Route::get('/{camp:slug}', 'showCheckout')->name('view.checkout');
+                Route::get('/{checkout}/invoice', 'showInvoice')->name('view.checkout.invoice');
+                Route::post('/{camp}', 'doCheckout')->name('action.checkout');
             });
 
         Route::prefix('admin')

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Requests\CheckoutRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\User\AfterCheckout;
 use App\Models\Checkout;
 use App\Models\Camp;
 
@@ -16,6 +18,11 @@ class CheckoutController extends Controller
             return redirect(route('view.dashboard'))->with('error.message', 'You already registered');
         }
         return view('user.checkout', compact('camp'));
+    }
+
+    public function showInvoice(Checkout $checkout)
+    {
+        return $checkout;
     }
 
     public function doCheckout(CheckoutRequest $request, Camp $camp)
@@ -35,6 +42,8 @@ class CheckoutController extends Controller
         $checkout->expired = date('Y-m-t', strtotime($checkoutData['expired']));
         $checkout->cvc = $checkoutData['cvc'];
         $checkout->save();
+
+        Mail::to($user->email)->send(new AfterCheckout($checkout));
 
         return view('user.checkout-success');
     }
