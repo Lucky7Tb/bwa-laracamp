@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Mail\User\AfterRegister;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -24,15 +25,19 @@ class AuthController extends Controller
     {
         $userCallbackData = Socialite::driver('google')->stateless()->user();
 
-        $user = User::firstOrCreate(['email' => $userCallbackData['email']], [
-            'name' => $userCallbackData->getName(),
-            'email' => $userCallbackData->getEmail(),
-            'avatar' => $userCallbackData->getAvatar(),
-            'email_verified_at' => now(),
-        ]);
+        $user = User::whereEmail($userCallbackData['email'])->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $userCallbackData->getName(),
+                'email' => $userCallbackData->getEmail(),
+                'avatar' => $userCallbackData->getAvatar(),
+                'email_verified_at' => now(),
+            ]);
+            Mail::to($user->email)->send(new AfterRegister($user));
+        }
 
         Auth::login($user, true);
-
         return redirect('/');
     }
 }
