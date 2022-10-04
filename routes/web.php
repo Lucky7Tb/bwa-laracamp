@@ -19,7 +19,6 @@ Route::middleware(['auth'])
             ->middleware(['is.user'])
             ->name('view.dashboard');
 
-
         Route::controller(\App\Http\Controllers\User\CheckoutController::class)
             ->middleware(['is.user'])
             ->prefix('checkout')
