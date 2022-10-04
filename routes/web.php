@@ -17,7 +17,7 @@ Route::middleware(['auth'])
     ->group(function() {
 
         // User Route
-        Route::middleware(['is.user'])  
+        Route::middleware('ensureRole:user')  
             ->name('user.')
             ->group(function(){
                 Route::get('dashboard', \App\Http\Controllers\User\DashboardController::class)
@@ -33,7 +33,7 @@ Route::middleware(['auth'])
 
         // Admin route
         Route::prefix('admin')
-            ->middleware(['is.admin'])
+            ->middleware('ensureRole:admin')
             ->name('admin.')
             ->group(function () {
                 Route::get('dashboard', \App\Http\Controllers\Admin\DashboardController::class)
