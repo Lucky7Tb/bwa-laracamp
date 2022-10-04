@@ -38,6 +38,7 @@ Route::middleware(['auth'])
             ->group(function () {
                 Route::get('dashboard', \App\Http\Controllers\Admin\DashboardController::class)
                 ->name('view.dashboard');
+                Route::post('checkout/{checkout}', \App\Http\Controllers\Admin\CheckoutController::class)->name('action.checkout');
             });
     });
 

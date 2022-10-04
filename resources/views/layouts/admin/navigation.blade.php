@@ -4,9 +4,9 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="flex items-center">
                     <a href="{{ route('admin.view.dashboard') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                         <img src="{{ asset('images/logo.png') }}" alt="Laracamp logo" width="100em">
                     </a>
                 </div>
 
