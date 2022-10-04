@@ -15,7 +15,7 @@ class CheckoutController extends Controller
     public function showCheckout(Camp $camp)
     {
         if ($camp->isRegistered) {
-            return redirect(route('view.dashboard'))->with('error.message', 'You already registered');
+            return redirect(route('user.view.dashboard'))->with('error.message', 'You already registered');
         }
         return view('user.checkout', compact('camp'));
     }

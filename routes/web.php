@@ -15,26 +15,29 @@ Route::controller(\App\Http\Controllers\User\AuthController::class)
 
 Route::middleware(['auth'])
     ->group(function() {
-        Route::get('/dashboard', [\App\Http\Controllers\User\DashboardController::class, 'showDashboard'])
-            ->middleware(['is.user'])
-            ->name('view.dashboard');
 
-        Route::controller(\App\Http\Controllers\User\CheckoutController::class)
-            ->middleware(['is.user'])
-            ->prefix('checkout')
-            ->group(function() {
-                Route::get('/{camp:slug}', 'showCheckout')->name('view.checkout');
-                Route::post('/{camp}', 'doCheckout')->name('action.checkout');
+        // User Route
+        Route::middleware(['is.user'])  
+            ->name('user.')
+            ->group(function(){
+                Route::get('dashboard', \App\Http\Controllers\User\DashboardController::class)
+                ->name('view.dashboard');
+
+                Route::controller(\App\Http\Controllers\User\CheckoutController::class)
+                    ->prefix('checkout')
+                    ->group(function() {
+                        Route::get('/{camp:slug}', 'showCheckout')->name('view.checkout');
+                        Route::post('/{camp}', 'doCheckout')->name('action.checkout');
+                    });
             });
 
+        // Admin route
         Route::prefix('admin')
             ->middleware(['is.admin'])
+            ->name('admin.')
             ->group(function () {
-                Route::controller(\App\Http\Controllers\Admin\DashboardController::class)
-                    ->prefix('dashboard')
-                    ->group(function() {
-                        Route::get('/', 'showDashboard')->name('dashboard');
-                    });
+                Route::get('dashboard', \App\Http\Controllers\Admin\DashboardController::class)
+                ->name('view.dashboard');
             });
     });
 

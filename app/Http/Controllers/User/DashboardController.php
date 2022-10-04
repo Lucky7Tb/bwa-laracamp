@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Checkout;
 
 class DashboardController extends Controller
 {
-    public function showDashboard()
+    public function __invoke()
     {
         $checkouts = Checkout::where('user_id', auth()->user()->id)
             ->with([

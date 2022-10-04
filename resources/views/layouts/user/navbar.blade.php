@@ -29,7 +29,7 @@
                         <img src="{{ auth()->user()->avatar }}" class="user-photo img-fluid rounded-pill" alt="{{ auth()->user()->name }}">
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right: 0; left: auto">
                             <li>
-                                <a href="{{ route('view.dashboard') }}" class="dropdown-item">My Dashboard</a>
+                                <a href="{{ route('user.view.dashboard') }}" class="dropdown-item">My Dashboard</a>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item" onclick="event.preventDefault();document.getElementById('formLogout').submit()">Keluar</a>

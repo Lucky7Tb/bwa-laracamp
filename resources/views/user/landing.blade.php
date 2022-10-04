@@ -215,7 +215,7 @@
                                     </div>
                                  @endforeach
                                 <p>
-                                    <a href="{{ route('view.checkout', $camp->slug) }}" class="btn btn-master btn-primary w-100 mt-3">
+                                    <a href="{{ route('user.view.checkout', $camp->slug) }}" class="btn btn-master btn-primary w-100 mt-3">
                                         Take This Plan
                                     </a>
                                 </p>
