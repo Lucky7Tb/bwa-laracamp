@@ -16,8 +16,8 @@ class IsUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->is_admin) {
-            return redirect(route('user.view.dashboard'));
+        if (!$request->user()->is_user) {
+            return redirect(route('admin.view.dashboard'));
         }
 
         return $next($request);
