@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\User\AfterCheckout;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Checkout;
 use App\Models\Camp;
@@ -112,5 +113,52 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function midtransCallback(Request $request)
+    {
+        $notif = new Midtrans\Notification();
+
+        $transaction_status = $notif->transaction_status;
+        $fraud = $notif->fraud_status;
+
+        $checkoutId = explode('-', $notif->order_id)[0];
+        $checkout = Checkout::find($checkoutId);
+
+        switch ($transaction_status) {
+            case 'capture':
+                if ($fraud == 'challenge') {
+                    // TODO Set payment status in merchant's database to 'challenge'
+                    $checkout->payment_status = 'pending';
+                } else {
+                    // TODO Set payment status in merchant's database to 'success'
+                    $checkout->payment_status = 'paid';
+                }
+                break;
+            case 'cancel':
+                if ($fraud == 'challenge') {
+                    // TODO Set payment status in merchant's database to 'failure'
+                    $checkout->payment_status = 'failed';
+                } else {
+                    // TODO Set payment status in merchant's database to 'failure'
+                    $checkout->payment_status = 'failed';
+                }
+                break;
+            case 'deny':
+                $checkout->payment_status = 'failed';
+                break;
+            case 'settlement':
+                $checkout->payment_status = 'paid';
+                break;
+            case 'pending':
+                $checkout->payment_status = 'pending';
+                break;
+            case 'expired':
+                $checkout->payment_status = 'failed';
+                break;
+        }
+
+        $checkout->save();
+        return view('user.checkout-success');
     }
 }

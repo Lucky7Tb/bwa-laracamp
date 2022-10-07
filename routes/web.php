@@ -13,6 +13,9 @@ Route::controller(\App\Http\Controllers\User\AuthController::class)
         Route::post('logout', 'logout')->name('action.logout');
     });
 
+Route::get('/payment/success', [\App\Http\Controllers\User\CheckoutController::class, 'midtransCallback']);
+Route::post('/payment/success', [\App\Http\Controllers\User\CheckoutController::class, 'midtransCallback']);
+
 Route::middleware(['auth'])
     ->group(function() {
 
