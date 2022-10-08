@@ -29,9 +29,6 @@
                                     <th scope="col" class="py-3 px-6">
                                         Paid Status
                                     </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        Action
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,19 +47,7 @@
                                             {{ $checkout->created_at->format('M d Y') }}
                                         </td>
                                         <td class="py-4 px-6">
-                                            @if($checkout->is_paid)
-                                                <span class="px-2 py-1 bg-emerald-600 text-white rounded-lg">Paid</span>
-                                            @else
-                                                <span class="px-2 py-1 bg-yellow-500 text-white rounded-lg">Waiting</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if(!$checkout->is_paid)
-                                                <form action="{{ route('admin.action.checkout', $checkout->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="px-4 py-3 bg-indigo-500 text-white rounded-xl active:outline active:outline-offset-2 active:outline-indigo-300 duration-150" type="submit">Set to paid</button>
-                                                </form>
-                                            @endif
+                                            <strong>{{ $checkout->payment_status }}</strong>
                                         </td>
                                     </tr>
                                 @empty

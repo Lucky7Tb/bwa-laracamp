@@ -17,7 +17,7 @@
             @include('components.alert')
             <table class="table">
                 <tbody>
-                    @foreach($checkouts as $checkout)
+                    @forelse($checkouts as $checkout)
                         <tr class="align-middle">
                             <td width="18%">
                                 <img src="{{ asset('images/item_bootcamp.png') }}" height="120" alt="bootcamp">
@@ -33,26 +33,29 @@
                             <td>
                                 <strong>${{ $checkout->camp->price }}</strong>
                             </td>
-                            @if($checkout->is_paid)
-                                <td>
-                                    <strong><span class="text-green">Payment Success</span></strong>
-                                </td>
-                            @else
-                                <td>
-                                    <strong>Waiting for Payment</strong>
-                                </td>
-                            @endif
-
+                            <td>
+                                <strong>{{ $checkout->payment_status }}</strong>
+                            </td>
+                            <td>
+                                @if($checkout->payment_status == 'waiting')
+                                    <a href="{{ $checkout->midtrans_url }}" class="btn btn-primary">Pay here</a>
+                                @endif
+                            </td>
                             <td>
                                 <a href="https://wa.me/08993970968?texx=Hallo, saya sudah membayar bootcamp saya" class="btn btn-primary">
                                     Contact Support !
                                 </a>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5">No camp register</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 </section>
 @endsection
+ 

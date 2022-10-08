@@ -35,9 +35,8 @@ class CheckoutRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore($this->user()->id),
             ],
             'occupation' => ['required', 'string'],
-            'card_number' => ['required', 'numeric', 'digits_between:8,16'],
-            'expired' => ['required', 'string', 'date_format:Y-m', 'after_or_equal:'.$expiredDateNow],
-            'cvc' => ['required', 'numeric', 'digits:3']
+            'phone_number' => ['required', 'digits_between:10,15'],
+            'address' => ['required', 'string']
         ];
     }
 }

@@ -40,14 +40,13 @@ class CheckoutController extends Controller
         $user->name = $checkoutData['name'];
         $user->email = $checkoutData['email'];
         $user->occupation = $checkoutData['occupation'];
+        $user->phone_number = $checkoutData['phone_number'];
+        $user->address = $checkoutData['address'];
         $user->save();
 
         $checkout = new Checkout();
         $checkout->user_id = $user->id;
         $checkout->camp_id = $camp->id;
-        $checkout->card_number = $checkoutData['card_number'];
-        $checkout->expired = date('Y-m-t', strtotime($checkoutData['expired']));
-        $checkout->cvc = $checkoutData['cvc'];
         $checkout->save();
 
         $this->getSnapRedirect($checkout);
@@ -85,7 +84,7 @@ class CheckoutController extends Controller
             'address' => $checkout->user->address,
             'city' => '',
             'postal_code' => '',
-            'phone' => $checkout->user->phone,
+            'phone' => $checkout->user->phone_number,
             'country_code' => 'IDN'
         ];
 
@@ -93,7 +92,7 @@ class CheckoutController extends Controller
             'first_name' => $checkout->user->name,
             'last_name' => '',
             'email' => $checkout->user->email,
-            'phone' => $checkout->user->phone,
+            'phone' => $checkout->user->phone_number,
             'billing_address' => $userData,
             'shipping_address' => $userData
         ];
@@ -117,7 +116,7 @@ class CheckoutController extends Controller
 
     public function midtransCallback(Request $request)
     {
-        $notif = new Midtrans\Notification();
+        $notif = $request->method() === 'POST' ? new Midtrans\Notification() : new Midtrans\Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
         $fraud = $notif->fraud_status;

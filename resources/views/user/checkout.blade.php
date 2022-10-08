@@ -52,26 +52,19 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="mb-4">
-                                <label for="card_number" class="form-label">Card Number</label>
-                                <input type="number" class="form-control" id="card_number" aria-describedby="emailHelp" placeholder="e.g 171xxxxxxx" name="card_number" value="{{ old('card_number') }}">
-                                @error('card_number')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
                             <div class="mb-5">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
-                                        <label for="expired" class="form-label">Expired</label>
-                                        <input type="month" class="form-control" id="expired" aria-describedby="expired" placeholder="2022-01" name="expired" value="{{ old('expired') }}">
-                                        @error('expired')
+                                        <label for="phone_number" class="form-label">Phone Number</label>
+                                        <input type="number" class="form-control" id="phone_number" aria-describedby="phone_number" placeholder="081xxxxxx" name="phone_number" value="{{ old('phone_number', auth()->user()->phone_number)}}">
+                                        @error('phone_number')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="col-lg-6 col-12">
-                                        <label for="cvc" class="form-label">CVC</label>
-                                        <input type="text" class="form-control" id="cvc" aria-describedby="cvc" placeholder="101" name="cvc" value="{{ old('cvc') }}">
-                                        @error('cvc')
+                                        <label for="address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="address" aria-describedby="address" placeholder="Your address" name="address" value="{{ old('address',  auth()->user()->address) }}">
+                                        @error('address')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
