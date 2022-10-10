@@ -52,7 +52,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="mb-5">
+                            <div class="mb-4">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
                                         <label for="phone_number" class="form-label">Phone Number</label>
@@ -69,6 +69,13 @@
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="code" class="form-label">Discount Code</label>
+                                <input type="text" class="form-control" id="code" aria-describedby="emailHelp" placeholder="e.g JADICEPE" name="code" value="{{ old('code') }}">
+                               @error('code')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <button type="submit" class="w-100 btn btn-primary">Pay Now</button>
                             <p class="text-center subheader mt-4">
