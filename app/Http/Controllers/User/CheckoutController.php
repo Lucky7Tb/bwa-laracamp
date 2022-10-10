@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\User\AfterCheckout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Discount;
 use App\Models\Checkout;
 use App\Models\Camp;
 use Midtrans;
@@ -47,6 +48,13 @@ class CheckoutController extends Controller
         $checkout = new Checkout();
         $checkout->user_id = $user->id;
         $checkout->camp_id = $camp->id;
+
+        if (isset($checkoutData['code'])) {
+            $discount = Discount::whereCode($checkoutData['code'])->first();
+            $checkout->discount_id = $discount->id;
+            $checkout->discount_percentage = $discount->percentage;
+        }
+
         $checkout->save();
 
         $this->getSnapRedirect($checkout);
@@ -66,16 +74,28 @@ class CheckoutController extends Controller
         $price = $checkout->camp->price;
         $checkout->midtrans_booking_code = $orderId;
 
-        $transactionDetails = [
-            'order_id' => $orderId,
-            'gross_ammount' => $price
-        ];
-
         $item_details[] = [
             'id' => $orderId,
             'price' => $price,
             'quantity' => 1,
             'name' => 'Payment for '. $checkout->camp->title.' Camp' 
+        ];
+
+        $discountPrice = 0;
+        if ($checkout->discount) {
+            $discountPrice = $price * $checkout->discount_percentage / 100;
+            $item_details[] = [
+                'id' => $checkout->discount->code,
+                'price' => $discountPrice * -1,
+                'quantity' => 1,
+                'name' => 'Discount checkout '. $checkout->discount->name.' '.$checkout->discount_percentage.'%' 
+            ];
+        }
+
+        $total = $price - $discountPrice;
+        $transactionDetails = [
+            'order_id' => $orderId,
+            'gross_ammount' => $total
         ];
 
         $userData[] = [
@@ -106,6 +126,7 @@ class CheckoutController extends Controller
         try {
             $paymentUrl = \Midtrans\Snap::createTransaction($midtransParams)->redirect_url; 
             $checkout->midtrans_url = $paymentUrl;
+            $checkout->total = $total;
             $checkout->save();
 
             return $paymentUrl;
@@ -116,7 +137,7 @@ class CheckoutController extends Controller
 
     public function midtransCallback(Request $request)
     {
-        $notif = $request->method() === 'POST' ? new Midtrans\Notification() : new Midtrans\Transaction::status($request->order_id);
+        $notif = $request->method() === 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
         $fraud = $notif->fraud_status;

@@ -36,7 +36,15 @@ class CheckoutRequest extends FormRequest
             ],
             'occupation' => ['required', 'string'],
             'phone_number' => ['required', 'digits_between:10,15'],
-            'address' => ['required', 'string']
+            'address' => ['required', 'string'],
+            'code' => [
+                'string',
+                'max:5',
+                'nullable', 
+                Rule::exists('discounts', 'code')->where(function($query) {
+                    return $query->where('deleted_at', null);
+                })
+            ]
         ];
     }
 }

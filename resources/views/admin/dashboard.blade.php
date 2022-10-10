@@ -38,10 +38,15 @@
                                             {{ $checkout->user->name }}
                                         </td>
                                         <td class="py-4 px-6">
-                                            {{ $checkout->camp->title }}                                            
+                                            {{ $checkout->camp->title }}                           
                                         </td>
                                         <td class="py-4 px-6">
                                             {{ $checkout->camp->price }}
+                                            @if($checkout->discount_id)
+                                                <span class="p-2 rounded text-white bg-emerald-500">
+                                                    Disc {{ $checkout->discount_percentage }}%
+                                                </span>
+                                            @endif
                                         </td>
                                         <td class="py-4 px-6">
                                             {{ $checkout->created_at->format('M d Y') }}
