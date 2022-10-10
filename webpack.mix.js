@@ -11,6 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.disableSuccessNotifications();
+
 mix.js('resources/js/app.js', 'public/js')
     .css('resources/css/main.css', 'public/css')
     .postCss('resources/css/app.css', 'public/css', [

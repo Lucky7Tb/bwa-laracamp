@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('admin.view.dashboard')" :active="request()->routeIs('admin.view.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.discount.index')" :active="request()->routeIs('admin.discount.index')">
+                        {{ __('Discount') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -65,6 +68,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('admin.view.dashboard')" :active="request()->routeIs('admin.view.dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.discount.index')" :active="request()->routeIs('admin.discount.index')">
+                {{ __('Discount') }}
             </x-responsive-nav-link>
         </div>
 
